@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const BACKEND_URL = 'http://localhost:4000'; // Change to your backend URL in production
+const BACKEND_URL = 'http://localhost:4000';
 
 function App() {
   const [url, setUrl] = useState('');
@@ -8,10 +8,13 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [downloadUrl, setDownloadUrl] = useState('');
+  const [downloadFilename, setDownloadFilename] = useState('');
 
   const handleDownload = async () => {
     setError('');
     setDownloadUrl('');
+    setDownloadFilename('');
+
     if (!url.trim()) {
       setError('Please enter a YouTube URL');
       return;
@@ -34,14 +37,62 @@ function App() {
         return;
       }
 
-      const blob = await response.blob();
-      const blobURL = window.URL.createObjectURL(blob);
-      setDownloadUrl(blobURL);
+      // Get filename from multiple possible sources
+      let filename = response.headers.get('X-Filename') || 
+                    response.headers.get('x-filename') ||
+                    response.headers.get('content-disposition');
+      
+      // Parse content-disposition header if that's what we got
+      if (filename && filename.includes('filename=')) {
+        const match = filename.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/);
+        if (match && match[1]) {
+          filename = match[1].replace(/['"]/g, '');
+        }
+      }
+      
+      // Fallback to default name
+      if (!filename) {
+        filename = `download.${format}`;
+      }
 
-    } catch {
+      console.log('Extracted filename:', filename); // Debug log
+
+      const blob = await response.blob();
+      const blobUrl = window.URL.createObjectURL(blob);
+
+      setDownloadUrl(blobUrl);
+      setDownloadFilename(filename);
+      
+      // Auto-download the file immediately
+      const link = document.createElement('a');
+      link.href = blobUrl;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      
+      // Clean up blob URL after a delay
+      setTimeout(() => {
+        window.URL.revokeObjectURL(blobUrl);
+        setDownloadUrl('');
+      }, 5000);
+      
+    } catch (err) {
+      console.error('Download error:', err);
       setError('An unexpected error occurred');
     }
     setLoading(false);
+  };
+
+  const downloadAgain = () => {
+    if (!downloadUrl || !downloadFilename) return;
+
+    const link = document.createElement('a');
+    link.href = downloadUrl;
+    link.download = downloadFilename;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
   };
 
   return (
@@ -94,14 +145,20 @@ function App() {
 
       {error && <p className="mt-4 text-red-600">{error}</p>}
 
-      {downloadUrl && (
-        <a
-          href={downloadUrl}
-          download={`you2tune-download.${format}`}
-          className="mt-6 text-purple-700 underline hover:text-purple-900"
-        >
-          Click here to save your {format.toUpperCase()} file
-        </a>
+      {downloadFilename && (
+        <div className="mt-6 text-center">
+          <p className="text-green-600 mb-2">
+            ✅ Downloaded: <strong>{downloadFilename}</strong>
+          </p>
+          {downloadUrl && (
+            <button
+              onClick={downloadAgain}
+              className="text-purple-700 underline hover:text-purple-900 bg-transparent border-none cursor-pointer"
+            >
+              Download again
+            </button>
+          )}
+        </div>
       )}
     </div>
   );
