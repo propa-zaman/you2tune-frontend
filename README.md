@@ -1,12 +1,64 @@
-# React + Vite
+# You2Tune - Frontend (React)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React frontend SPA for YouTube to MP3 & MP4 conversion.
 
-Currently, two official plugins are available:
+## Features
+- Paste YouTube URL
+- Choose MP3 or MP4 format
+- Download converted files
+- Responsive UI with status and error messages
+- FAQ and usage instructions included
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Setup & Run Locally
 
-## Expanding the ESLint configuration
+1. Clone the repo:
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+git clone https://github.com/yourusername/you2tune-frontend.git
+cd you2tune-frontend
+```
+
+2. Install dependencies:
+
+```bash
+npm install
+```
+
+3. Create a \`.env\` file in the root:
+
+```bash
+VITE_BACKEND_URL=http://localhost:4000
+```
+
+4. Start development server:
+
+```bash
+npm run dev
+```
+
+Open your browser at \`http://localhost:5173\` (or the port shown in the terminal).
+
+## Build for Production
+
+```bash
+npm run build
+```
+
+Production-ready files will be in the \`dist\` directory.
+
+Deploy \`dist\` on Vercel, Netlify, or any static hosting.
+
+Make sure to set \`VITE_BACKEND_URL\` to your deployed backend API URL in production.
+
+## Deployment Recommendations
+
+- Backend on VPS or cloud server where ffmpeg and yt-dlp are installed.
+- Frontend on Vercel or any static hosting service.
+
+## License
+
+MIT License
+
+## Author
+
+Your Name | [Afra Zaman](https://github.com/propa-zaman)
