@@ -20,6 +20,7 @@ import {
   DownloadCloud,
   FileAudio,
   FileVideo,
+  PlaySquare,
 } from "lucide-react"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 
@@ -123,7 +124,8 @@ export default function App() {
               </span>
             </h2>
             <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-              Convert YouTube videos to high-quality MP3 audio or MP4 video files. Fast, free, and easy to use.
+              Convert YouTube videos and Shorts to high-quality MP3 audio or MP4 video files. Fast, free, and easy to
+              use.
             </p>
           </div>
 
@@ -352,6 +354,27 @@ export default function App() {
                   </div>
                 </div>
               </Card>
+
+              {/* YouTube Shorts Downloader Feature */}
+              <Card className="bg-white/10 backdrop-blur-lg border-white/20 overflow-hidden">
+                <div className="md:flex">
+                  <div className="md:w-1/2 p-8">
+                    <h3 className="text-3xl font-semibold text-pink-400 mb-4">YouTube Shorts Downloader</h3>
+                    <p className="text-gray-200 text-lg mb-4">
+                      Quickly save your favorite YouTube Shorts in MP4 format. Enjoy short-form content offline,
+                      anytime, anywhere.
+                    </p>
+                    <ul className="list-disc list-inside text-gray-300 space-y-1">
+                      <li>Download Shorts in their original quality</li>
+                      <li>Perfect for sharing or rewatching</li>
+                      <li>Simple and fast process</li>
+                    </ul>
+                  </div>
+                  <div className="md:w-1/2 flex items-center justify-center p-8 bg-white/5">
+                    <PlaySquare className="w-32 h-32 text-pink-400 md:w-48 md:h-48" />
+                  </div>
+                </div>
+              </Card>
             </div>
           </div>
 
@@ -374,6 +397,16 @@ export default function App() {
                 </AccordionTrigger>
                 <AccordionContent className="p-6 pt-0 text-gray-300">
                   You can download YouTube videos as MP3 (audio) or MP4 (video) files.
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="item-2b" className="bg-white/10 border-white/20 rounded-lg mb-3">
+                <AccordionTrigger className="p-6 text-lg font-medium text-white hover:no-underline">
+                  Can I download YouTube Shorts?
+                </AccordionTrigger>
+                <AccordionContent className="p-6 pt-0 text-gray-300">
+                  Yes, You2Tune fully supports downloading YouTube Shorts. Just paste the Short's URL, choose MP4
+                  format, and download it just like any other YouTube video.
                 </AccordionContent>
               </AccordionItem>
 
