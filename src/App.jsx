@@ -24,6 +24,8 @@ import {
 } from "lucide-react"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
 export default function App() {
   const [url, setUrl] = useState("")
   const [format, setFormat] = useState("mp3")
@@ -49,7 +51,7 @@ export default function App() {
     setDownloadStatus("Preparing download...")
 
     try {
-      const response = await fetch("http://localhost:4000/download", {
+      const response = await fetch(`${BACKEND_URL}/download`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
