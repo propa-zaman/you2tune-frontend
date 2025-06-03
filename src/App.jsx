@@ -102,7 +102,7 @@ export default function App() {
             <Button
               variant="ghost"
               size="sm"
-              className="text-white hover:bg-white/10"
+              className="text-white hover:bg-white/10 hover:text-white"
               onClick={() => document.getElementById("faq-section")?.scrollIntoView({ behavior: "smooth" })}
             >
               <HelpCircle className="w-4 h-4 mr-2" />
